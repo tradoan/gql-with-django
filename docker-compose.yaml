@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    container_name: gql-django-db
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - '5432:5432'
+  web:
+    build:
+      context: .
+      args:
+        - UID=${UID}
+        - GID=${GID}
+    # https://docs.docker.com/compose/compose-file/compose-file-v3/#init
+    # https://github.com/krallin/tini#using-tini
+    # if a specific docker image is used, one can set 'init' flag to true
+    # and does not need toinstall ini in Dockerfile?
+    # image: gql-with-django_web
+    # init: true
+    command: python3 manage.py runserver 0.0.0.0:8000
+    container_name: gql-django-web
+    volumes:
+      - .:/app
+    ports:
+      - '8000:8000'
+    environment:
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - db
