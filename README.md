@@ -10,7 +10,7 @@ This project is build to try out GraphQL with Django using Docker and poetry.
 cp .env.example .env
 ```
 
-Note: You have to apply your actual local UID and GID in the `.env` file. Check them by running the command `id`. You can change other credentials in this file as needed.
+Note: You should apply your actual local UID and GID in the `.env` file. Figure them out on your machine by running the command `id`. You can change other credentials in this file as needed.
 
 ### Start containers with the following command:
 

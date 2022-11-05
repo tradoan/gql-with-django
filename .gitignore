@@ -1,0 +1,7 @@
+db.sqlite3
+.env
+**/__pycache__
+venv
+data
+.DS_Store
+.bash_history
